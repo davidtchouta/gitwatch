@@ -4,3 +4,5 @@ joblib
 scikit-learn
 gunicorn
 Pillow
+torch 
+torchvision
