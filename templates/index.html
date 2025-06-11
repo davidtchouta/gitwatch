@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentification Rolex</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+        footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .upload-container {
+            border: 2px dashed #ccc;
+            padding: 2rem;
+            margin: 1rem auto;
+            max-width: 500px;
+        }
+        .upload-container input[type="file"] {
+            margin-bottom: 1rem;
+        }
+        .upload-container button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+        .upload-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Authentification Rolex</h1>
+    </header>
+    <main>
+        <div class="upload-container">
+            <h2>Télécharger une image</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="image" name="image" accept="image/*" required>
+                <br>
+                <button type="submit">Soumettre</button>
+            </form>
+            <div id="result"></div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Authentification Rolex. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData();
+            const imageInput = document.getElementById('image');
+            formData.append('image', imageInput.files[0]);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = `<p>Prédiction: ${data.prediction}</p>`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = `<p>Une erreur est survenue lors de la prédiction.</p>`;
+            });
+        });
+    </script>
+</body>
+</html>
