@@ -38,4 +38,4 @@ def predict_route():
     return jsonify({'prediction': label, 'probabilities': probabilities})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8080, debug=True)
