@@ -88,9 +88,6 @@
             font-size: 24px; /* Ajustez la taille de la police selon vos préférences */
         }
 
-</style>
-
-
     </style>
 </head>
 <body>
@@ -172,8 +169,9 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('result').innerHTML = `<p>Une erreur est survenue lors de la prédiction.</p>`;
+                document.getElementById('result').innerHTML = `<p>Une erreur est survenue lors de la prédiction : ${error.message}</p>`;
             });
+
         });
 
         document.getElementById('resetButton').addEventListener('click', function() {
