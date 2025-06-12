@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Load the model
 model = load_model("model.pth")
-class_names = ['fake', 'real']  # Ajustez si nécessaire
+class_names = ['FAKE', 'REAL']  # Ajustez si nécessaire
 
 # Définir les transformations
 transform = transforms.Compose([
@@ -34,8 +34,8 @@ def predict_route():
     image_tensor = transform(image).unsqueeze(0)
 
     # Prédire
-    label = predict(model, image_tensor, class_names)
-    return jsonify({'prediction': label})
+    label, probabilities = predict(model, image_tensor, class_names)
+    return jsonify({'prediction': label, 'probabilities': probabilities})
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    app.run(debug=True)

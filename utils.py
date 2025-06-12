@@ -2,6 +2,7 @@ import torch
 import torchvision.models as models
 from torchvision import transforms
 from PIL import Image
+import torch.nn.functional as F
 
 # Définir les transformations
 transform = transforms.Compose([
@@ -27,5 +28,6 @@ def predict(model, image_tensor, class_names):
     image_tensor = image_tensor.to(device)
     with torch.no_grad():
         output = model(image_tensor)
-        _, pred = torch.max(output, 1)
-    return class_names[pred.item()]
+        probabilities = F.softmax(output, dim=1).squeeze().tolist()
+        pred = torch.max(output, 1)[1].item()
+    return class_names[pred], probabilities
